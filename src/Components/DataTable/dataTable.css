@@ -1,0 +1,84 @@
+table {
+   margin: 0;
+   padding: 0;
+   box-sizing: content-box;
+}
+
+tr:last-of-type {
+   border-bottom: 1px solid black;
+}
+tbody tr:nth-of-type(odd) {
+   background-color: rgb(236, 236, 236);
+}
+
+.search,
+.search div:first-of-type {
+   display: flex;
+   align-items: center;
+}
+.search div:first-of-type {
+   column-gap: 10px;
+}
+.search div:first-of-type select {
+   padding: 4px 8px;
+}
+.search {
+   justify-content: space-between;
+}
+table {
+   border-collapse: separate;
+   border-spacing: 0;
+}
+thead tr {
+   border-bottom: 1px solid black;
+}
+tr th {
+   border-bottom: inherit;
+}
+th {
+   padding: 10px 18px;
+}
+
+td {
+   padding: 8px 10px;
+   border-collapse: collapse;
+}
+.indicator {
+   margin-left: 5px;
+}
+
+.pagination {
+   border-top: 1px solid black;
+   display: flex;
+   justify-content: space-between;
+   padding-top: 5px;
+}
+.pagination button {
+   padding: 8px 16px;
+   border-radius: 2px;
+}
+.pageNav {
+   display: flex;
+   column-gap: 3px;
+}
+.noData {
+   text-align: center;
+}
+.pageBtn {
+   border: 1px solid #a3a3a3;
+
+   background: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.715) 0%,
+      rgba(255, 254, 254, 0.801) 28%,
+      rgb(236, 236, 236) 75%
+   );
+}
+.transparent,
+.navBtn {
+   border: none;
+   background-color: transparent;
+}
+.transparent {
+   background: transparent;
+}
