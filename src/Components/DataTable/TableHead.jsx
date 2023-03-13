@@ -5,6 +5,7 @@ const TH = styled.th`
     padding: 10px 18px;
     span{
         margin-left: 15px;
+        width: fit-content;
         min-width: 20px;
     }
 `
@@ -13,20 +14,31 @@ const TH = styled.th`
 function TableHead({ th, globalFilterState, setGlobalFilterState, sort, sortCondition }) {
     const [isSorted, setIsSorted] = useState(false)
     const [isSortedDescendant, setIsSortedDescendant] = useState(true)
-    // const [filter, setFilter] = useState("neutral")
     function handleClick() {
         setGlobalFilterState(th.accessor)
 
         setIsSorted(true)
         isSorted && setIsSortedDescendant(prev => !prev)
         !isSortedDescendant && setIsSorted(false)
-        // sort(th.accessor, isSortedDescendant, isSorted)
 
     }
+    function handleSwitch() {
+        if (globalFilterState === th.accessor) {
+            if (isSorted && isSortedDescendant) {
+                sortCondition(1)
+            }
+            else if (isSorted && !isSortedDescendant) {
+                sortCondition(-1)
+            }
+            else sortCondition(0)
+        }
+        else {
+            sort(prev => !prev)
+        }
+    }
+
     useEffect(() => {
-        // console.log("isSorted: ====>" + isSorted);
-        // console.log("isSortedDesc: ====>" + isSortedDescendant);
-        isSorted ? isSortedDescendant ? sortCondition(1) : sortCondition(-1) : sortCondition(0)
+        handleSwitch()
     }, [isSorted, isSortedDescendant])
     useEffect(() => {
         globalFilterState === th.accessor ? (setIsSorted(true), setIsSortedDescendant(true)) : (setIsSorted(false), setIsSortedDescendant(true))
@@ -36,4 +48,4 @@ function TableHead({ th, globalFilterState, setGlobalFilterState, sort, sortCond
     )
 }
 
-export default TableHead
+export default React.memo(TableHead)

@@ -18,4 +18,4 @@ function TableRow({ dataRow, columns, format }) {
     )
 }
 
-export default TableRow
+export default React.memo(TableRow)

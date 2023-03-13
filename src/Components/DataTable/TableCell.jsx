@@ -22,4 +22,4 @@ function TableCell({ data }) {
     )
 }
 
-export default TableCell
+export default React.memo(TableCell)

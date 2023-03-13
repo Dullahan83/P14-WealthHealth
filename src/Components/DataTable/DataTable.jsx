@@ -13,11 +13,11 @@ function DataTable({ tHead, datas }) {
     const [tempData, setTempData] = useState(datas)
     const [filteredData, setFilteredDatas] = useState(tempData)
     const [globalFilterState, setGlobalFilterState] = useState("")
-    const [descendant, setDescendant] = useState(false)
+    const [forceRender, setForceRender] = useState(false)
     const [currentPage, setCurrentPage] = useState(1)
     const [itemPerPage, setItemPerPage] = useState(10)
     const [sortCondition, setSortCondition] = useState(0)
-
+    const [currentSearch, setCurrentSearch] = useState("")
     let pageCount = tempData.length ? tempData.length < itemPerPage ? 1 : Math.floor(tempData.length / itemPerPage) + 1 : 0
     const canPrevious = pageCount > 1 && currentPage != 1 ? true : false
     const canNext = pageCount > 1 && currentPage < pageCount ? true : false
@@ -41,7 +41,6 @@ function DataTable({ tHead, datas }) {
         )
     }
     const stylePageBtn = () => {
-        console.log("hey")
         const btnPage = document.querySelectorAll(".pageBtn")
         btnPage.forEach((btn) => {
             btn.dataset.pagenumber == currentPage ? btn.classList.remove("transparent") : btn.classList.add("transparent")
@@ -50,18 +49,17 @@ function DataTable({ tHead, datas }) {
     function FormatDate(valuePair) {
         if (valuePair[0].toLowerCase().includes("date")) {
             const date = new Date(valuePair[1]).toLocaleString("en-US", { month: "numeric", day: "numeric", year: "numeric" })
-            console.log(typeof date)
             return date
         }
         return valuePair[1]
     }
-    const filterDatas = (e) => {
+    const filterDatas = (search) => {
         let array = []
         datas.map(row => {
             let toAdd = false
             Object.entries(row).map(field => {
                 const fieldValue = FormatDate(field)
-                if (fieldValue?.toLowerCase().includes(e.target.value.toLowerCase())) {
+                if (fieldValue?.toLowerCase().includes(search)) {
                     toAdd = true
                 }
 
@@ -74,12 +72,6 @@ function DataTable({ tHead, datas }) {
 
     function sortData(filter, desc, sorted) {
         let newData
-        // let newData = [...tempData].sort((a, b) => desc ? a[filter]?.toLowerCase() > b[filter]?.toLowerCase() ? 1 : -1 : a[filter]?.toLowerCase() < b[filter]?.toLowerCase() ? 1 : -1
-        // )
-        // console.log(filter, desc, sorted);
-        // console.log(tempData)
-        // !sorted && desc && setTempData(datas)
-        // sorted && setTempData(newData)
         if (sortCondition === 1) {
             newData = [...tempData].sort((a, b) => a[filter]?.toLowerCase() > b[filter]?.toLowerCase() ? 1 : -1)
             setTempData(newData)
@@ -90,15 +82,16 @@ function DataTable({ tHead, datas }) {
         }
         else if (sortCondition === 0) {
             setTempData(datas)
+            filterDatas(currentSearch)
         }
         setCurrentPage(1)
-        // console.log("=============")
-        // console.log(tempData);
-
     }
     useEffect(() => {
+        filterDatas(currentSearch)
+    }, [currentSearch])
+    useEffect(() => {
         sortData(globalFilterState)
-    }, [sortCondition])
+    }, [sortCondition, forceRender])
     useEffect(() => {
         setFilteredDatas(tempData.slice((currentPage - 1) * itemPerPage, currentPage * itemPerPage))
         stylePageBtn()
@@ -118,14 +111,14 @@ function DataTable({ tHead, datas }) {
                 </div>
                 <div>
                     <label htmlFor="search">Search:</label>
-                    <input type="text" name="search" id="search" onChange={filterDatas} />
+                    <input type="text" name="search" id="search" onChange={(e) => setCurrentSearch(e.target.value.trim().toLowerCase())} />
                 </div>
             </div>
             <Table>
                 <thead>
                     <tr>
                         {tHead && tHead.map((th, key) => {
-                            return <TableHead th={th} key={key} sort={sortData} sortCondition={setSortCondition} setDescendant={setDescendant} globalFilterState={globalFilterState} setGlobalFilterState={setGlobalFilterState} />
+                            return <TableHead th={th} key={key} sort={setForceRender} sortCondition={setSortCondition} globalFilterState={globalFilterState} setGlobalFilterState={setGlobalFilterState} />
                         })}
                     </tr>
                 </thead>
