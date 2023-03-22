@@ -16,12 +16,14 @@
     "@reduxjs/toolkit": "^1.9.3",
     "core-js": "^3.29.0",
     "react": "^18.2.0",
+    "react-customizable-select": "^1.0.0",
     "react-datepicker": "^4.10.0",
     "react-dom": "^18.2.0",
     "react-redux": "^8.0.5",
     "react-router-dom": "^6.8.1",
     "react-table": "^7.8.0",
     "redux": "^4.2.1",
+    "redux-persist": "^6.0.0",
     "styled-components": "^5.3.6"
   },
   "devDependencies": {

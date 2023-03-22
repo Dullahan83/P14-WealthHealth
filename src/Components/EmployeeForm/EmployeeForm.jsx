@@ -2,11 +2,11 @@ import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { departments, states } from '../../Datas/datas'
 import { addEmployee } from '../../features/User/hrSlice'
-import Select from '../../Plugins/Select'
+// import Select from '../../Plugins/Select'
 import InputField from '../InputField/InputField'
 import DatePicker from "react-datepicker"
 import "react-datepicker/dist/react-datepicker.css"
-
+import Select from 'react-customizable-select'
 
 function EmployeeForm({ modalState, setModalState }) {
     const [firstName, setFirstName] = useState("")
@@ -22,7 +22,6 @@ function EmployeeForm({ modalState, setModalState }) {
     const dispatch = useDispatch()
     function handleSubmit(e) {
         e.preventDefault()
-        //.toISOString()
         const user = {
             "firstName": firstName,
             "lastName": lastName,
@@ -35,7 +34,6 @@ function EmployeeForm({ modalState, setModalState }) {
             "zipCode": zipCode,
 
         }
-        console.log(user)
         if (firstName && lastName && birthDate && startDate && street && city && state && zipCode && department) {
             dispatch(addEmployee(user))
             setModalState(true)
