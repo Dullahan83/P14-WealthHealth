@@ -53,10 +53,10 @@ function EmployeeForm({ modalState, setModalState }) {
             <InputField type='text' id="first-name" labelValue="First Name" className="inputField" state={firstName} setState={setFirstName} />
             <InputField type='text' id="last-name" labelValue="Last Name" className="inputField" state={lastName} setState={setLastName} />
             <InputField type='text' id="date-of-birth" labelValue="Date of Birth" className="inputField" state={birthDate} setState={setBirthDate}>
-                <DatePicker selected={birthDate} dateFormat="MM/dd/yyyy" onChange={(date) => setBirthDate(date)} onSelect={(date) => setBirthDate(date)} />
+                <DatePicker selected={birthDate} id="date-of-birth" dateFormat="MM/dd/yyyy" onChange={(date) => setBirthDate(date)} onSelect={(date) => setBirthDate(date)} />
             </InputField>
             <InputField type='text' id="start-date" labelValue="Start Date" className="inputField" setState={setStartDate} state={startDate}>
-                <DatePicker selected={startDate} dateFormat="MM/dd/yyyy" onChange={(date) => setStartDate(date)} onSelect={(date) => setStartDate(date)} /></InputField>
+                <DatePicker selected={startDate} id="start-date" dateFormat="MM/dd/yyyy" onChange={(date) => setStartDate(date)} onSelect={(date) => setStartDate(date)} /></InputField>
             <fieldset className='address'>
                 <legend>Address</legend>
                 <InputField type='text' id="street" labelValue="Street" className="inputField" setState={setStreet} state={street} />
